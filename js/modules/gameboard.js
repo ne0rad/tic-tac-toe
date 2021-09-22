@@ -55,14 +55,36 @@ const gameboard = (() => {
             default:
                 break;
         }
+        // Checking win conditions
+        let win = false;
+        for (let i = 1; i <= 3; i++) {
+            if (square(1, i) === 0 && square(2, i) === 0 && square(3, i) === 0) win = "x";
+            else if (square(i, 1) === 0 && square(i, 2) === 0 && square(i, 3) === 0) win = "x";
+            else if (square(i, 1) === 1 && square(i, 2) === 1 && square(i, 3) === 1) win = "o";
+            else if (square(1, i) === 1 && square(2, i) === 1 && square(3, i) === 1) win = "o";
+        }
+        if(square(1, 1) === 0 && square(2, 2) === 0 && square(3, 3) === 0) win = "x";
+        else if(square(1, 3) === 0 && square(2, 2) === 0 && square(3, 1) === 0) win = "x";
+        else if(square(1, 1) === 1 && square(2, 2) === 1 && square(3, 3) === 1) win = "o";
+        else if(square(1, 3) === 1 && square(2, 2) === 1 && square(3, 1) === 1) win = "o";
 
-        return true;
+
+        if(!win) return;
+        winAlert(win);
+
     }
 
     const reset = () => {
         for (let i = 0; i < boardArr.length; i++) {
             boardArr[i] = -1;
         }
+        for (let i = 1; i <= 3; i++) {
+            for (let j = 1; j <= 3; j++) {
+                let squareDiv = document.getElementById(`${i}${j}`);
+                squareDiv.textContent = "";
+            }
+        }
+        totalMoves = 0;
     }
 
     const moves = () => {
@@ -73,12 +95,16 @@ const gameboard = (() => {
         let gameDiv = document.getElementById("game");
         for (let i = 1; i <= 3; i++) {
             for (let j = 1; j <= 3; j++) {
-                let squareDiv = gameDiv.appendChild( document.createElement("div") );
+                let squareDiv = gameDiv.appendChild(document.createElement("div"));
                 squareDiv.className = "square";
                 squareDiv.id = `${i}${j}`;
-                squareDiv.addEventListener("click", () => play(i,j));
+                squareDiv.addEventListener("click", () => play(i, j));
             }
         }
+    }
+
+    const winAlert = (victor) => {
+        alert(`Congratulations ${victor} won the game!`);
     }
 
     return { square, play, reset, generateSqares };
