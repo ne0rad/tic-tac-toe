@@ -73,7 +73,8 @@ const gameboard = (() => {
         else if (square(1, 3) === 0 && square(2, 2) === 0 && square(3, 1) === 0) win = "x";
         else if (square(1, 1) === 1 && square(2, 2) === 1 && square(3, 3) === 1) win = "o";
         else if (square(1, 3) === 1 && square(2, 2) === 1 && square(3, 1) === 1) win = "o";
-        if (totalMoves === 10) win = "draw";
+        
+        if(!win && totalMoves === 10) win = "draw";
 
         if(!win) return;
         winMessage(win);
