@@ -11,6 +11,8 @@ const gameboard = (() => {
     const boardArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
     let totalMoves = 0;
     let win = false;
+    let playerOneName = "Player 1";
+    let playerTwoName = "Player 2";
 
     const square = (x, y) => {
         // return value of the square based on coordinates
@@ -34,10 +36,10 @@ const gameboard = (() => {
         if (square(x, y) !== -1 || win) return false;
 
         let squareDom = document.getElementById(`${x}${y}`);
-        let sign;
+        let sign = playerTurn();
         let numSign;
-        if (moves() % 2 === 0) { sign = 'x'; numSign = 0 }
-        else { sign = 'o'; numSign = 1; }
+        if (sign === "x") { numSign = 0 }
+        else { numSign = 1; }
 
         switch (x) {
             case 1:
@@ -71,10 +73,10 @@ const gameboard = (() => {
         else if (square(1, 3) === 0 && square(2, 2) === 0 && square(3, 1) === 0) win = "x";
         else if (square(1, 1) === 1 && square(2, 2) === 1 && square(3, 3) === 1) win = "o";
         else if (square(1, 3) === 1 && square(2, 2) === 1 && square(3, 1) === 1) win = "o";
-        if (totalMoves === 9) win = "draw";
+        if (totalMoves === 10) win = "draw";
 
         if(!win) return;
-        winAlert(win);
+        winMessage(win);
     }
 
     const reset = () => {
@@ -87,13 +89,9 @@ const gameboard = (() => {
                 squareDiv.textContent = "";
             }
         }
-        document.getElementById("result").textContent = "Click on a square!";
         win = false;
         totalMoves = 0;
-    }
-
-    const moves = () => {
-        return totalMoves++;
+        playerTurn();
     }
 
     const generateSqares = () => {
@@ -108,12 +106,24 @@ const gameboard = (() => {
         }
     }
 
-    const winAlert = (victor) => {
+    const winMessage = (victor) => {
         if(victor === "draw") document.getElementById("result").textContent = "It's a draw!";
-        else document.getElementById("result").textContent = `"${victor}" won the game`.toUpperCase();
+        else document.getElementById("result").textContent = victor === 'x' ? playerOneName + " won the game!" : playerTwoName + " won the game!";
     }
 
-    return { square, play, reset, generateSqares };
+    const playerTurn = () => {
+        totalMoves++;
+        if(totalMoves % 2 == 0) {
+            document.getElementById("result").textContent = `${playerTwoName} turn [ O ]`;
+            return "x";
+        } else {
+            document.getElementById("result").textContent = `${playerOneName} turn [ X ]`;
+            return "o";
+        }
+
+    }
+
+    return { square, play, reset, generateSqares, playerTurn };
 })();
 
 export default gameboard;
