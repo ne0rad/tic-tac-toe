@@ -1,6 +1,5 @@
-const player = (name, ai) => {
+const player = (name) => {
     let score = 0;
-    if(ai) name = "CPU";
 
     const setName = (newName) => {
         name = newName;

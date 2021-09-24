@@ -1,8 +1,8 @@
 import gameboard from './modules/gameboard.js';
 import player from './modules/player.js';
 
-let playerOne = player("Player One", false); // player(Player Name, AI enabled: true/false)
-let playerTwo = player("Player Two", false);
+let playerOne = player("Player One"); // player(Player Name, AI enabled: true/false)
+let playerTwo = player("Player Two");
 
 // Variable switches to true/false depending on whose turn it is
 let turn = true;
@@ -22,6 +22,7 @@ const generateSquares = () => {
 }
 
 const clickSquare = (x, y) => {
+    if(gameboard.winStatus()) return;
     gameboard.play(x, y, turn);
     turn = !turn; // Set next turn for the next player
     let playerTurn = nextTurn() === 1 ? 2 : 1;
