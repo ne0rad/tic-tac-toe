@@ -22,7 +22,7 @@ const generateSquares = () => {
 }
 
 const clickSquare = (x, y) => {
-    if(gameboard.winStatus()) return;
+    if (gameboard.winStatus()) return;
     gameboard.play(x, y, turn);
     turn = !turn; // Set next turn for the next player
     let playerTurn = nextTurn() === 1 ? 2 : 1;
@@ -31,11 +31,12 @@ const clickSquare = (x, y) => {
         if (victor === 'tie') document.getElementById("result").textContent = "It's a tie";
         else if (playerTurn === 1) {
             playerOne.victoryMsg();
+            addScore(playerTurn);
         }
         else {
             playerTwo.victoryMsg();
+            addScore(playerTurn);
         }
-        addScore(playerTurn);
         matchTurn = !matchTurn; // Other player starts the next game
     }
 }
@@ -54,7 +55,7 @@ const nextTurn = () => {
     return playerTurn;
 }
 
-const scoreNames = () => {
+const updateScoreNames = () => {
     document.getElementById("playerOneName").textContent = playerOne.name;
     document.getElementById("playerTwoName").textContent = playerTwo.name;
 }
@@ -81,5 +82,5 @@ document.getElementById("reset").addEventListener("click", () => reset());
 
 generateSquares();
 nextTurn();
-scoreNames();
+updateScoreNames();
 
