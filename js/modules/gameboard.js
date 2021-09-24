@@ -11,13 +11,11 @@ const gameboard = (() => {
     const boardArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
     let totalMoves = 0;
     let win = false;
-    let playerOneName = "Player 1";
-    let playerTwoName = "Player 2";
 
     const square = (x, y) => {
         // return value of the square based on coordinates
 
-        if (x > 3 || y > 3) return NaN;
+        if (x > 3 || y > 3) return undefined;
         switch (x) {
             case 1:
                 return boardArr[y - 1];
@@ -30,16 +28,22 @@ const gameboard = (() => {
         }
     }
 
-    const play = (x, y) => {
+    const play = (x, y, turn) => {
         // sign is "x" or "o"
         // put X or O on the board based on coordinates
         if (square(x, y) !== -1 || win) return false;
 
         let squareDom = document.getElementById(`${x}${y}`);
-        let sign = playerTurn();
+        let sign;
         let numSign;
-        if (sign === "x") { numSign = 0 }
-        else { numSign = 1; }
+        if (turn) {
+            numSign = 0;
+            sign = 'x';
+        }
+        else {
+            numSign = 1;
+            sign = 'o';
+        }
 
         switch (x) {
             case 1:
@@ -57,7 +61,7 @@ const gameboard = (() => {
             default:
                 break;
         }
-        checkWin();
+        totalMoves++;
         return;
     }
 
@@ -73,11 +77,11 @@ const gameboard = (() => {
         else if (square(1, 3) === 0 && square(2, 2) === 0 && square(3, 1) === 0) win = "x";
         else if (square(1, 1) === 1 && square(2, 2) === 1 && square(3, 3) === 1) win = "o";
         else if (square(1, 3) === 1 && square(2, 2) === 1 && square(3, 1) === 1) win = "o";
-        
-        if(!win && totalMoves === 10) win = "draw";
 
-        if(!win) return;
-        winMessage(win);
+        if (!win && totalMoves === 9) win = "tie";
+
+        if (!win) return false;
+        else return win;
     }
 
     const reset = () => {
@@ -92,39 +96,9 @@ const gameboard = (() => {
         }
         win = false;
         totalMoves = 0;
-        playerTurn();
     }
 
-    const generateSqares = () => {
-        let gameDiv = document.getElementById("game");
-        for (let i = 1; i <= 3; i++) {
-            for (let j = 1; j <= 3; j++) {
-                let squareDiv = gameDiv.appendChild(document.createElement("div"));
-                squareDiv.className = "square";
-                squareDiv.id = `${i}${j}`;
-                squareDiv.addEventListener("click", () => play(i, j));
-            }
-        }
-    }
-
-    const winMessage = (victor) => {
-        if(victor === "draw") document.getElementById("result").textContent = "It's a draw!";
-        else document.getElementById("result").textContent = victor === 'x' ? playerOneName + " won the game!" : playerTwoName + " won the game!";
-    }
-
-    const playerTurn = () => {
-        totalMoves++;
-        if(totalMoves % 2 == 0) {
-            document.getElementById("result").textContent = `${playerTwoName} turn [ O ]`;
-            return "x";
-        } else {
-            document.getElementById("result").textContent = `${playerOneName} turn [ X ]`;
-            return "o";
-        }
-
-    }
-
-    return { square, play, reset, generateSqares, playerTurn };
+    return { square, play, reset, checkWin };
 })();
 
 export default gameboard;

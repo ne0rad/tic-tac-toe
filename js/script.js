@@ -1,6 +1,84 @@
 import gameboard from './modules/gameboard.js';
+import player from './modules/player.js';
 
-document.getElementById("reset").addEventListener("click", () => gameboard.reset());
+let playerOne = player("Player One", false); // player(Player Name, AI enabled: true/false)
+let playerTwo = player("Player Two", false);
 
-gameboard.generateSqares();
-gameboard.playerTurn();
+// Variable switches to true/false depending on whose turn it is
+let turn = true;
+let matchTurn = true;
+
+const generateSquares = () => {
+    // Generate clickable squares / gameboard
+    let gameDiv = document.getElementById("game");
+    for (let i = 1; i <= 3; i++) {
+        for (let j = 1; j <= 3; j++) {
+            let squareDiv = gameDiv.appendChild(document.createElement("div"));
+            squareDiv.className = "square";
+            squareDiv.id = `${i}${j}`;
+            squareDiv.addEventListener("click", () => clickSquare(i, j));
+        }
+    }
+}
+
+const clickSquare = (x, y) => {
+    gameboard.play(x, y, turn);
+    turn = !turn; // Set next turn for the next player
+    let playerTurn = nextTurn() === 1 ? 2 : 1;
+    let victor = gameboard.checkWin();
+    if (victor) {
+        if (victor === 'tie') document.getElementById("result").textContent = "It's a tie";
+        else if (playerTurn === 1) {
+            playerOne.victoryMsg();
+        }
+        else {
+            playerTwo.victoryMsg();
+        }
+        addScore(playerTurn);
+        matchTurn = !matchTurn; // Other player starts the next game
+    }
+}
+
+const nextTurn = () => {
+    let playerTurn;
+    if (turn && matchTurn) playerTurn = 1;
+    else if (!turn && matchTurn) playerTurn = 2;
+    else if (turn && !matchTurn) playerTurn = 2;
+    else playerTurn = 1;
+
+    document.getElementById("result").textContent = playerTurn === 1 ?
+        playerOne.name + " turn." :
+        playerTwo.name + " turn.";
+
+    return playerTurn;
+}
+
+const scoreNames = () => {
+    document.getElementById("playerOneName").textContent = playerOne.name;
+    document.getElementById("playerTwoName").textContent = playerTwo.name;
+}
+
+const addScore = (playerTurn) => {
+    if (playerTurn === 1) {
+        playerOne.addPoint();
+        document.getElementById("playerOneScore").textContent = playerOne.getPoints();
+    } else {
+        playerTwo.addPoint();
+        document.getElementById("playerTwoScore").textContent = playerTwo.getPoints();
+    }
+}
+
+const reset = () => {
+    gameboard.reset();
+    turn = true;
+    nextTurn();
+}
+
+
+// Add event listeners
+document.getElementById("reset").addEventListener("click", () => reset());
+
+generateSquares();
+nextTurn();
+scoreNames();
+
