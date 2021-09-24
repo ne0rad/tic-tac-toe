@@ -1,7 +1,7 @@
 import gameboard from './modules/gameboard.js';
 import player from './modules/player.js';
 
-let playerOne = player("Player One"); // player(Player Name, AI enabled: true/false)
+let playerOne = player("Player One"); // player(Player Name)
 let playerTwo = player("Player Two");
 
 // Variable switches to true/false depending on whose turn it is
@@ -49,8 +49,8 @@ const nextTurn = () => {
     else playerTurn = 1;
 
     document.getElementById("result").textContent = playerTurn === 1 ?
-        playerOne.name + " turn." :
-        playerTwo.name + " turn.";
+        playerOne.name + " turn" :
+        playerTwo.name + " turn";
 
     return playerTurn;
 }
