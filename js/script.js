@@ -24,7 +24,7 @@ const generateSquares = () => {
 }
 
 const clickSquare = (x, y) => {
-    if (gameboard.winStatus()) return;
+    if (gameboard.winStatus() || nameChangeOn) return;
     gameboard.play(x, y, turn);
     turn = !turn; // Set next turn for the next player
     let playerTurn = nextTurn() === 1 ? 2 : 1;
@@ -82,6 +82,7 @@ const nameChangeToggle = () => {
 }
 
 const changeName = () => {
+    if(!nameChangeOn) return;
     let newNameOne = document.getElementById("playerOneInput").value;
     let newNameTwo = document.getElementById("playerTwoInput").value;
 
@@ -98,6 +99,7 @@ const changeName = () => {
 }
 
 const reset = () => {
+    if(nameChangeOn) return;
     gameboard.reset();
     turn = true;
     nextTurn();
