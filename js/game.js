@@ -25,7 +25,8 @@ const generateSquares = () => {
 }
 
 const clickSquare = (x, y) => {
-    if (!gameboard.play(x, y, turn) || nameChangeOn) return;
+    if (nameChangeOn) return;
+    else if (!gameboard.play(x, y, turn)) return;
     turn = !turn; // Set next turn for the next player
     let playerTurn = nextTurn() === 1 ? 2 : 1;
     let victor = gameboard.checkWin();
@@ -82,7 +83,7 @@ const addScore = (playerTurn) => {
     }
 }
 
-const nameChangeToggle = () => {
+const toggleNameChange = () => {
     if(!nameChangeOn) {
         document.getElementById("nameChange").style = "display: flex";
     } else {
@@ -126,8 +127,8 @@ const startGame = () => {
 // Add event listeners
 document.getElementById("nextRound").addEventListener("click", () => reset());
 document.getElementById("nameConfirm").addEventListener("click", () => changeName());
-document.getElementById("nameCancel").addEventListener("click", () => nameChangeToggle());
-document.getElementById("nameOpen").addEventListener("click", () => nameChangeToggle());
+document.getElementById("nameCancel").addEventListener("click", () => toggleNameChange());
+document.getElementById("nameOpen").addEventListener("click", () => toggleNameChange());
 document.addEventListener('keydown', function(e) {
     if(e.key === "Enter") changeName();
 });
