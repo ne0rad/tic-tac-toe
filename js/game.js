@@ -25,8 +25,7 @@ const generateSquares = () => {
 }
 
 const clickSquare = (x, y) => {
-    if (gameboard.winStatus() || nameChangeOn) return;
-    gameboard.play(x, y, turn);
+    if (!gameboard.play(x, y, turn) ||  gameboard.winStatus() || nameChangeOn) return;
     turn = !turn; // Set next turn for the next player
     let playerTurn = nextTurn() === 1 ? 2 : 1;
     let victor = gameboard.checkWin();

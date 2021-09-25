@@ -62,7 +62,7 @@ const gameboard = (() => {
                 break;
         }
         totalMoves++;
-        return;
+        return true;
     }
 
     const checkWin = () => {
