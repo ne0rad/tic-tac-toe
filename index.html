@@ -14,9 +14,6 @@
         <div>
           <span class="titleText">Tic-Tac-Toe</span>
         </div>
-        <div id="display">
-          <span id="result"></span>
-        </div>
         <div>
           <span id="playerOneName"></span>
           <span>&nbsp;</span>
@@ -28,8 +25,18 @@
           <span>&nbsp;</span>
           <span id="playerTwoName"></span>
         </div>
+        <div id="display" class="display">
+          <span id="result"></span>
+        </div>
         <div>
           <button id="nextRound" class="btn">Next Round</button>
+        </div>
+        <div id="cpuControl">
+          <span>CPU:&nbsp;</span> <button id="cpu" class="cpuButton"></button>
+          <br>
+          <span>Hardmode:&nbsp;</span> <button id="cpuHard" class="cpuButton"></button>
+        </div>
+        <div>
           <button id="nameOpen" class="btn">Change Names</button>
         </div>
         <div>
@@ -46,17 +53,28 @@
         <div>
           <span class="nameTitle">Player One:</span>
           <br />
-          <input class="nameInput" id="playerOneInput" type="text" maxlength="14"/>
+          <input
+            class="nameInput"
+            id="playerOneInput"
+            type="text"
+            maxlength="14"
+          />
         </div>
         <div>
           <span class="nameTitle">Player Two:</span>
           <br />
-          <input class="nameInput" id="playerTwoInput" type="text" maxlength="14"/>
+          <input
+            class="nameInput"
+            id="playerTwoInput"
+            type="text"
+            maxlength="14"
+          />
         </div>
         <div>
           <button id="nameConfirm" class="btn">Confirm</button>
           <button id="nameCancel" class="btn">Cancel</button>
         </div>
+      </div>
     </div>
   </body>
 </html>

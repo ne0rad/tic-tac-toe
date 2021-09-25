@@ -4,12 +4,15 @@ import player from './modules/player.js';
 let playerOne = player("Player One"); // player(Player Name)
 let playerTwo = player("Player Two");
 
-// Variable for switching whose turn it is
+// Variables for switching turns
 let turn = true;
 let matchTurn = true;
 
+// Variables for UI
 let nameChangeOn = false;
 let nextRound = false;
+
+let cpuEnabled = false;
 
 const generateSquares = () => {
     // Generate clickable squares / gameboard
@@ -48,8 +51,10 @@ const clickSquare = (x, y) => {
 const toggleNextRound = () => {
     if(nextRound) { 
         document.getElementById("nextRound").disabled = false;
+        document.getElementById("display").className = "display greenText";
     } else {
         document.getElementById("nextRound").disabled = true;
+        document.getElementById("display").className = "display";
     }
     nextRound = !nextRound;
 }
@@ -109,7 +114,25 @@ const changeName = () => {
     toggleNameChange();
 }
 
-const reset = () => {
+const toggleCpu = () => {
+    if(cpuEnabled) {
+        document.getElementById("cpu").className = "cpuButton";
+        document.getElementById("playerTwoInput").disabled = false;
+        document.getElementById("playerTwoInput").value = "Player Two";
+        nameChangeOn = true;
+        changeName();
+        document.getElementById("playerTwoInput").value = "";
+    } else {
+        document.getElementById("cpu").className = "cpuButton cpuEnabled";
+        document.getElementById("playerTwoInput").disabled = true;
+        document.getElementById("playerTwoInput").value = "CPU";
+        nameChangeOn = true;
+        changeName();
+    }
+    cpuEnabled = !cpuEnabled;
+}
+
+const nextRoundClick = () => {
     if(nameChangeOn) return;
     gameboard.reset();
     turn = true;
@@ -122,13 +145,15 @@ const startGame = () => {
     nextTurn();
     updateScoreNames();
     toggleNextRound();
+    toggleCpu();
 }
 
 // Add event listeners
-document.getElementById("nextRound").addEventListener("click", () => reset());
+document.getElementById("nextRound").addEventListener("click", () => nextRoundClick());
 document.getElementById("nameConfirm").addEventListener("click", () => changeName());
 document.getElementById("nameCancel").addEventListener("click", () => toggleNameChange());
 document.getElementById("nameOpen").addEventListener("click", () => toggleNameChange());
+document.getElementById("cpu").addEventListener("click", () => toggleCpu());
 document.addEventListener('keydown', function(e) {
     if(e.key === "Enter") changeName();
 });

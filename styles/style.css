@@ -53,7 +53,7 @@ body {
   background-color: var(--bg-color);
 }
 
-#display {
+.display {
   background-color: grey;
   width: 90%;
   color: white;
@@ -75,10 +75,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  
+
   background-color: var(--bg-color);
   border-radius: 5px;
-  box-shadow: 0 0 5px 2px black;
+  box-shadow: 0 0 10px 3px black;
 }
 
 .nameInput {
@@ -121,7 +121,7 @@ body {
   font-family: var(--font);
   font-size: 20px;
   width: 130px;
-  height: 40px;
+  height: 35px;
   margin: 3px;
   border: none;
   border-radius: 5px;
@@ -137,10 +137,38 @@ body {
   box-shadow: 0 0 1px 1px black;
 }
 .btn:disabled {
-    color: grey;
+  color: grey;
 }
 .btn:disabled:hover {
-    background-color: silver;
+  background-color: silver;
+}
+
+.cpuButton {
+  position: relative;
+  height: 25px;
+  width: 25px;
+  top: 5px;
+  background-color: tomato;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 2px 1px black;
+  opacity: 70%;
+  transition: all 0.2s;
+}
+
+.cpuButton:hover {
+  opacity: 100%;
+}
+.cpuButton:disabled:hover {
+  opacity: 70%;
+}
+
+.cpuEnabled {
+  background-color: yellowgreen;
+}
+
+.greenText {
+  color: rgb(170, 255, 0);
 }
 
 .noselect {
