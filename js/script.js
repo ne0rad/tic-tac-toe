@@ -8,6 +8,8 @@ let playerTwo = player("Player Two");
 let turn = true;
 let matchTurn = true;
 
+let nameChangeOn = false;
+
 const generateSquares = () => {
     // Generate clickable squares / gameboard
     let gameDiv = document.getElementById("game");
@@ -49,15 +51,15 @@ const nextTurn = () => {
     else playerTurn = 1;
 
     document.getElementById("result").textContent = playerTurn === 1 ?
-        playerOne.name + " turn" :
-        playerTwo.name + " turn";
+        playerOne.getName() + " turn" :
+        playerTwo.getName() + " turn";
 
     return playerTurn;
 }
 
 const updateScoreNames = () => {
-    document.getElementById("playerOneName").textContent = playerOne.name;
-    document.getElementById("playerTwoName").textContent = playerTwo.name;
+    document.getElementById("playerOneName").textContent = playerOne.getName();
+    document.getElementById("playerTwoName").textContent = playerTwo.getName();
 }
 
 const addScore = (playerTurn) => {
@@ -68,6 +70,31 @@ const addScore = (playerTurn) => {
         playerTwo.addPoint();
         document.getElementById("playerTwoScore").textContent = playerTwo.getPoints();
     }
+}
+
+const nameChangeToggle = () => {
+    if(!nameChangeOn) {
+        document.getElementById("nameChange").style = "display: flex";
+    } else {
+        document.getElementById("nameChange").style = "display: none";
+    }
+    nameChangeOn = !nameChangeOn;
+}
+
+const changeName = () => {
+    let newNameOne = document.getElementById("playerOneInput").value;
+    let newNameTwo = document.getElementById("playerTwoInput").value;
+
+    if(newNameOne.length < 1) newNameOne = playerOne.getName();
+    if(newNameTwo.length < 1) newNameTwo = playerTwo.getName();
+
+    playerOne.setName(newNameOne);
+    playerTwo.setName(newNameTwo);
+
+    updateScoreNames();
+    nextTurn();
+
+    nameChangeToggle();
 }
 
 const reset = () => {
@@ -84,6 +111,10 @@ const startGame = () => {
 
 // Add event listeners
 document.getElementById("reset").addEventListener("click", () => reset());
+document.getElementById("nameConfirm").addEventListener("click", () => changeName());
+document.getElementById("nameCancel").addEventListener("click", () => nameChangeToggle());
+document.getElementById("nameOpen").addEventListener("click", () => nameChangeToggle());
+
 
 startGame();
 
