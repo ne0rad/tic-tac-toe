@@ -106,7 +106,7 @@ const changeName = () => {
     updateScoreNames();
     nextTurn();
 
-    nameChangeToggle();
+    toggleNameChange();
 }
 
 const reset = () => {
