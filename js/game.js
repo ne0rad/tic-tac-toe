@@ -1,5 +1,6 @@
 import gameboard from './modules/gameboard.js';
 import player from './modules/player.js';
+import cpu from './modules/cpu.js';
 
 let playerOne = player("Player One"); // player(Player Name)
 let playerTwo = player("Player Two");
@@ -44,12 +45,23 @@ const clickSquare = (x, y) => {
             addScore(playerTurn);
         }
         toggleNextRound();
+        turn = !turn; // Different player starts next round
         matchTurn = !matchTurn; // Other player starts the next game
+        return;
+    }
+    if(cpuEnabled && playerTurn === 1 && !gameboard.fullBoard()) {
+        cpuMove();
     }
 }
 
+const cpuMove = () => {
+    // CPU makes the move
+    let move = cpu.generateMove(gameboard.getBoard());
+    clickSquare(move[0], move[1]);
+}
+
 const toggleNextRound = () => {
-    if(nextRound) { 
+    if (nextRound) {
         document.getElementById("nextRound").disabled = false;
         document.getElementById("display").className = "display greenText";
     } else {
@@ -60,11 +72,7 @@ const toggleNextRound = () => {
 }
 
 const nextTurn = () => {
-    let playerTurn;
-    if (turn && matchTurn) playerTurn = 1;
-    else if (!turn && matchTurn) playerTurn = 2;
-    else if (turn && !matchTurn) playerTurn = 2;
-    else playerTurn = 1;
+    let playerTurn = turn ? 1 : 2;
 
     document.getElementById("result").textContent = playerTurn === 1 ?
         playerOne.getName() + " turn" :
@@ -89,7 +97,7 @@ const addScore = (playerTurn) => {
 }
 
 const toggleNameChange = () => {
-    if(!nameChangeOn) {
+    if (!nameChangeOn) {
         document.getElementById("nameChange").style = "display: flex";
     } else {
         document.getElementById("nameChange").style = "display: none";
@@ -98,12 +106,12 @@ const toggleNameChange = () => {
 }
 
 const changeName = () => {
-    if(!nameChangeOn) return;
+    if (!nameChangeOn) return;
     let newNameOne = document.getElementById("playerOneInput").value;
     let newNameTwo = document.getElementById("playerTwoInput").value;
 
-    if(newNameOne.length < 1) newNameOne = playerOne.getName();
-    if(newNameTwo.length < 1) newNameTwo = playerTwo.getName();
+    if (newNameOne.length < 1) newNameOne = playerOne.getName();
+    if (newNameTwo.length < 1) newNameTwo = playerTwo.getName();
 
     playerOne.setName(newNameOne);
     playerTwo.setName(newNameTwo);
@@ -115,25 +123,25 @@ const changeName = () => {
 }
 
 const toggleCpu = () => {
-    if(cpuEnabled) {
+    if (cpuEnabled) {
         document.getElementById("cpu").className = "cpuButton";
         document.getElementById("playerTwoInput").disabled = false;
         document.getElementById("playerTwoInput").value = "Player Two";
-        nameChangeOn = true;
+        nameChangeOn = true; // Required to enable name change
         changeName();
         document.getElementById("playerTwoInput").value = "";
     } else {
         document.getElementById("cpu").className = "cpuButton cpuEnabled";
         document.getElementById("playerTwoInput").disabled = true;
         document.getElementById("playerTwoInput").value = "CPU";
-        nameChangeOn = true;
+        nameChangeOn = true; // Required to enable name change
         changeName();
     }
     cpuEnabled = !cpuEnabled;
 }
 
 const nextRoundClick = () => {
-    if(nameChangeOn) return;
+    if (nameChangeOn) return;
     gameboard.reset();
     turn = true;
     toggleNextRound();
@@ -154,8 +162,8 @@ document.getElementById("nameConfirm").addEventListener("click", () => changeNam
 document.getElementById("nameCancel").addEventListener("click", () => toggleNameChange());
 document.getElementById("nameOpen").addEventListener("click", () => toggleNameChange());
 document.getElementById("cpu").addEventListener("click", () => toggleCpu());
-document.addEventListener('keydown', function(e) {
-    if(e.key === "Enter") changeName();
+document.addEventListener('keydown', function (e) {
+    if (e.key === "Enter") changeName();
 });
 
 
