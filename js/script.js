@@ -9,6 +9,7 @@ let turn = true;
 let matchTurn = true;
 
 let nameChangeOn = false;
+let nextRound = false;
 
 const generateSquares = () => {
     // Generate clickable squares / gameboard
@@ -39,8 +40,18 @@ const clickSquare = (x, y) => {
             playerTwo.victoryMsg();
             addScore(playerTurn);
         }
+        toggleNextRound();
         matchTurn = !matchTurn; // Other player starts the next game
     }
+}
+
+const toggleNextRound = () => {
+    if(nextRound) { 
+        document.getElementById("nextRound").disabled = false;
+    } else {
+        document.getElementById("nextRound").disabled = true;
+    }
+    nextRound = !nextRound;
 }
 
 const nextTurn = () => {
@@ -102,6 +113,7 @@ const reset = () => {
     if(nameChangeOn) return;
     gameboard.reset();
     turn = true;
+    toggleNextRound();
     nextTurn();
 }
 
@@ -109,13 +121,17 @@ const startGame = () => {
     generateSquares();
     nextTurn();
     updateScoreNames();
+    toggleNextRound();
 }
 
 // Add event listeners
-document.getElementById("reset").addEventListener("click", () => reset());
+document.getElementById("nextRound").addEventListener("click", () => reset());
 document.getElementById("nameConfirm").addEventListener("click", () => changeName());
 document.getElementById("nameCancel").addEventListener("click", () => nameChangeToggle());
 document.getElementById("nameOpen").addEventListener("click", () => nameChangeToggle());
+document.addEventListener('keydown', function(e) {
+    if(e.key === "Enter") changeName();
+});
 
 
 startGame();
