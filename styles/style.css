@@ -93,9 +93,9 @@ html, body {
 
 .btn {
     font-family: var(--font);
-    font-size: 20px;
-    width: 100px;
-    height: 30px;
+    font-size: 25px;
+    width: 150px;
+    height: 40px;
     border: none;
     border-radius: 5px;
     box-shadow: 0 0 3px 1px black;
