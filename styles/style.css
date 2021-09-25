@@ -71,9 +71,9 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  height: 400px;
+  height: 300px;
   width: 300px;
-  margin-top: -200px;
+  margin-top: -150px;
   margin-left: -150px;
   display: none;
   flex-direction: column;
