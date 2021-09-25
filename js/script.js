@@ -4,7 +4,7 @@ import player from './modules/player.js';
 let playerOne = player("Player One"); // player(Player Name)
 let playerTwo = player("Player Two");
 
-// Variable switches to true/false depending on whose turn it is
+// Variable for switching whose turn it is
 let turn = true;
 let matchTurn = true;
 
@@ -76,11 +76,14 @@ const reset = () => {
     nextTurn();
 }
 
+const startGame = () => {
+    generateSquares();
+    nextTurn();
+    updateScoreNames();
+}
 
 // Add event listeners
 document.getElementById("reset").addEventListener("click", () => reset());
 
-generateSquares();
-nextTurn();
-updateScoreNames();
+startGame();
 
