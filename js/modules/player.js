@@ -25,7 +25,7 @@ const player = (name) => {
         document.getElementById("result").textContent = `${name} wins!`;
     }
 
-    return {getName, getPoints, setName, addPoint, victoryMsg, setScore};
+    return { getName, getPoints, setName, addPoint, victoryMsg, setScore };
 };
 
 export default player;

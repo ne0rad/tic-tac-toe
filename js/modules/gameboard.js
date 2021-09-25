@@ -88,11 +88,6 @@ const gameboard = (() => {
         return boardArr;
     }
 
-    const fullBoard = () => {
-        if(boardArr.indexOf(-1) === -1) return true;
-        else return false;
-    }
-
     const reset = () => {
         for (let i = 0; i < boardArr.length; i++) {
             boardArr[i] = -1;
@@ -107,7 +102,7 @@ const gameboard = (() => {
         totalMoves = 0;
     }
 
-    return { square, play, reset, checkWin, getBoard, fullBoard };
+    return { square, play, reset, checkWin, getBoard };
 })();
 
 export default gameboard;
