@@ -124,6 +124,7 @@ const changeName = () => {
 }
 
 const toggleCpu = () => {
+    if(!turn) return;
     if (cpuEnabled) {
         document.getElementById("cpu").className = "cpuButton";
         document.getElementById("playerTwoInput").disabled = false;
