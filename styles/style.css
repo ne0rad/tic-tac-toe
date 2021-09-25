@@ -139,6 +139,9 @@ body {
 .btn:active {
   box-shadow: 0 0 1px 1px black;
 }
+.btn:disabled:hover {
+    background-color: silver;
+}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
