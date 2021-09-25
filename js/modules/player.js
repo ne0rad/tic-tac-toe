@@ -13,6 +13,10 @@ const player = (name) => {
         score++;
     }
 
+    const setScore = (newScore) => {
+        score = newScore;
+    }
+
     const getPoints = () => {
         return score;
     }
@@ -21,7 +25,7 @@ const player = (name) => {
         document.getElementById("result").textContent = `${name} wins!`;
     }
 
-    return {getName, getPoints, setName, addPoint, victoryMsg};
+    return {getName, getPoints, setName, addPoint, victoryMsg, setScore};
 };
 
 export default player;

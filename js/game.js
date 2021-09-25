@@ -45,11 +45,12 @@ const clickSquare = (x, y) => {
             addScore(playerTurn);
         }
         toggleNextRound();
-        turn = !turn; // Different player starts next round
+        if(matchTurn) turn = false; // Different player starts next round
+        else turn = true; 
         matchTurn = !matchTurn; // Other player starts the next game
         return;
     }
-    if(cpuEnabled && playerTurn === 1 && !gameboard.fullBoard()) {
+    if (cpuEnabled && playerTurn === 1 && !gameboard.fullBoard()) {
         cpuMove();
     }
 }
@@ -137,15 +138,29 @@ const toggleCpu = () => {
         nameChangeOn = true; // Required to enable name change
         changeName();
     }
+    playerOne.setScore(0);
+    playerTwo.setScore(0);
     cpuEnabled = !cpuEnabled;
 }
 
 const nextRoundClick = () => {
     if (nameChangeOn) return;
     gameboard.reset();
-    turn = true;
     toggleNextRound();
+
+    if(!turn && cpuEnabled) {
+        cpuMove();
+    }
+
     nextTurn();
+}
+
+const reset = () => {
+    // TODO
+    turn = true;
+    matchTurn = true;
+    nextRound = false;
+    cpuEnabled = false;
 }
 
 const startGame = () => {
