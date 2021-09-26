@@ -60,7 +60,7 @@ const clickSquare = (x, y) => {
 const cpuMove = () => {
     // CPU makes the move
     let move = cpu.generateMove(gameboard.getBoard());
-    clickSquare(move[0], move[1]);
+    if(move) clickSquare(move[0], move[1]);
 }
 
 const toggleNextRound = () => {
