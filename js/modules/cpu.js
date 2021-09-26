@@ -37,12 +37,10 @@ const cpu = (() => {
     const generateMove = (board) => {
         let openMoves = openSquares(board);
         if(!openMoves) return false;
-        let randomNum = randomInt(openMoves.length);
 
-        console.log(randomNum);
+        let randomNum = randomInt(openMoves.length);
         let randomMove = openMoves[randomNum];
 
-        console.log(randomMove);
         return [randomMove[0] + 1, randomMove[1] + 1]; // return array with move coordinates
     }
 
