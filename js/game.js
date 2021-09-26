@@ -19,7 +19,7 @@ let nextRound = false;
 let cpuEnabled = false;
 
 const generateSquares = () => {
-    // Generate clickable squares / gameboard
+    // Generate clickable squares / gameboard in DOM
     let gameDiv = document.getElementById("game");
     for (let i = 1; i <= 3; i++) {
         for (let j = 1; j <= 3; j++) {
