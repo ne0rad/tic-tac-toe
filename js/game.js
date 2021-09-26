@@ -17,6 +17,7 @@ let nameChangeOn = false;
 let nextRound = false;
 
 let cpuEnabled = false;
+let uiDisabled = false;
 
 const generateSquares = () => {
     // Generate clickable squares / gameboard in DOM
@@ -31,8 +32,9 @@ const generateSquares = () => {
     }
 }
 
-const clickSquare = (x, y) => {
+const clickSquare = (x, y, isCpu) => {
     if (nameChangeOn) return;
+    else if(cpuEnabled && !turn && !isCpu) return;
     else if (!gameboard.play(x, y, turn)) return; // Places either X or O on the board
     turn = !turn; // Set next turn for the next player
     nextTurn();
@@ -60,7 +62,14 @@ const clickSquare = (x, y) => {
 const cpuMove = () => {
     // CPU makes the move
     let move = cpu.generateMove(gameboard.getBoard());
-    if(move) clickSquare(move[0], move[1]);
+    if (move) {
+        toggleDisable();
+        setTimeout(() => {
+            clickSquare(move[0], move[1], true);
+            toggleDisable();
+        }
+            , 500, move);
+    }
 }
 
 const toggleNextRound = () => {
@@ -134,6 +143,7 @@ const changeName = () => {
 }
 
 const toggleCpu = () => {
+    if (uiDisabled) return;
     if (cpuEnabled) {
         document.getElementById("cpu").className = "cpuButton";
         document.getElementById("playerTwoInput").disabled = false;
@@ -152,7 +162,7 @@ const toggleCpu = () => {
 }
 
 const nextRoundClick = () => {
-    if (nameChangeOn) return;
+    if (nameChangeOn || uiDisabled) return;
     gameboard.reset();
     toggleNextRound();
 
@@ -163,8 +173,12 @@ const nextRoundClick = () => {
     nextTurn();
 }
 
+const toggleDisable = () => {
+    uiDisabled = !uiDisabled;
+}
+
 const reset = () => {
-    // TODO
+    if (uiDisabled) return;
     gameboard.reset();
     turn = true;
     matchTurn = true;
