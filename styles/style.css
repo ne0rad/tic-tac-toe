@@ -177,6 +177,10 @@ body {
   color: rgb(170, 255, 0);
 }
 
+#gitlink {
+  color: black;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
