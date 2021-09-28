@@ -45,6 +45,10 @@ const cpu = (() => {
 
         let moves = openSquares(newArr);
         if (!moves || depth === 0) return 0;
+        if (moves.length >= 8) {
+            winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2]);
+            return;
+        }
         let winningMove;
         if (maximizing) {
             let maxEval = -Infinity;
@@ -59,7 +63,7 @@ const cpu = (() => {
                     maxEval = evaluation;
                 }
             });
-            if(depth === 5) winningMoves.push(winningMove);
+            if (depth === 5) winningMoves.push(winningMove);
             return maxEval;
         } else {
             let minEval = +Infinity;
@@ -79,23 +83,24 @@ const cpu = (() => {
     }
 
     const generateMove = (board, hardmode) => {
-        if(hardmode) {
-        let newArr = [];
-        for (let i = 0; i < board.length; i++)
-            newArr[i] = board[i].slice();
-        const winningMoves = [];
-        goodMove(newArr, true, winningMoves, 5);
-        let move = winningMoves[randomInt(winningMoves.length - 1)];
-        return [move[0] + 1, move[1] + 1];
+        if (hardmode) {
+            let newArr = [];
+            for (let i = 0; i < board.length; i++)
+                newArr[i] = board[i].slice();
+            const winningMoves = [];
+            goodMove(newArr, true, winningMoves, 5);
+            console.log(winningMoves);
+            let move = winningMoves[randomInt(winningMoves.length - 1)];
+            return [move[0] + 1, move[1] + 1];
 
         } else {
-        let openMoves = openSquares(board);
-        if(!openMoves) return false;
+            let openMoves = openSquares(board);
+            if (!openMoves) return false;
 
-        let randomNum = randomInt(openMoves.length);
-        let randomMove = openMoves[randomNum];
+            let randomNum = randomInt(openMoves.length);
+            let randomMove = openMoves[randomNum];
 
-        return [randomMove[0] + 1, randomMove[1] + 1];
+            return [randomMove[0] + 1, randomMove[1] + 1];
         }
     }
 
