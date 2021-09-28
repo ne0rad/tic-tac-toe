@@ -19,6 +19,8 @@ let nextRound = false;
 let cpuEnabled = false;
 let uiDisabled = false;
 
+let hardmode = false;
+
 const generateSquares = () => {
     // Generate clickable squares / gameboard in DOM
     let gameDiv = document.getElementById("game");
@@ -34,7 +36,7 @@ const generateSquares = () => {
 
 const clickSquare = (x, y, isCpu) => {
     if (nameChangeOn) return;
-    else if(cpuEnabled && !turn && !isCpu) return;
+    else if (cpuEnabled && !turn && !isCpu) return;
     else if (!gameboard.play(x, y, turn)) return; // Places either X or O on the board
     turn = !turn; // Set next turn for the next player
     nextTurn();
@@ -53,15 +55,16 @@ const clickSquare = (x, y, isCpu) => {
         if (matchTurn) turn = false; // Different player starts next round
         else turn = true;
         matchTurn = !matchTurn; // Other player starts the next game
-    }
-    if (cpuEnabled && !turn) {
-        cpuMove();
+    } else {
+        if (cpuEnabled && !turn) {
+            cpuMove();
+        }
     }
 }
 
 const cpuMove = () => {
     // CPU makes the move
-    let move = cpu.generateMove(gameboard.getBoard());
+    let move = cpu.generateMove(gameboard.getBoard(), hardmode);
     if (move) {
         toggleDisable();
         setTimeout(() => {
@@ -161,6 +164,16 @@ const toggleCpu = () => {
     cpuEnabled = !cpuEnabled;
 }
 
+const toggleHardmode = () => {
+    if(!cpuEnabled) return;
+    if(hardmode) {
+        document.getElementById("cpuHard").className = "cpuButton";
+    } else {
+        document.getElementById("cpuHard").className = "cpuButton cpuEnabled";
+    }
+    hardmode = !hardmode;
+}
+
 const nextRoundClick = () => {
     if (nameChangeOn || uiDisabled) return;
     gameboard.reset();
@@ -203,10 +216,10 @@ document.getElementById("nameConfirm").addEventListener("click", () => changeNam
 document.getElementById("nameCancel").addEventListener("click", () => toggleNameChange());
 document.getElementById("nameOpen").addEventListener("click", () => toggleNameChange());
 document.getElementById("cpu").addEventListener("click", () => toggleCpu());
+document.getElementById("cpuHard").addEventListener("click", () => toggleHardmode());
 document.addEventListener('keydown', function (e) {
     if (e.key === "Enter") changeName();
 });
 
 
 startGame();
-
