@@ -89,7 +89,6 @@ const cpu = (() => {
                 newArr[i] = board[i].slice();
             const winningMoves = [];
             goodMove(newArr, true, winningMoves, 5);
-            console.log(winningMoves);
             let move = winningMoves[randomInt(winningMoves.length - 1)];
             return [move[0] + 1, move[1] + 1];
 
