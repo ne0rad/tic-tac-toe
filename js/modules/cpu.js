@@ -63,7 +63,7 @@ const cpu = (() => {
                     maxEval = evaluation;
                 }
             });
-            if (depth === 5) winningMoves.push(winningMove);
+            if (depth === 6) winningMoves.push(winningMove);
             return maxEval;
         } else {
             let minEval = +Infinity;
@@ -88,7 +88,7 @@ const cpu = (() => {
             for (let i = 0; i < board.length; i++)
                 newArr[i] = board[i].slice();
             const winningMoves = [];
-            goodMove(newArr, true, winningMoves, 5);
+            goodMove(newArr, true, winningMoves, 6);
             let move = winningMoves[randomInt(winningMoves.length - 1)];
             return [move[0] + 1, move[1] + 1];
 
