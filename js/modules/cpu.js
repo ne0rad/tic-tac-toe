@@ -45,7 +45,7 @@ const cpu = (() => {
 
         let moves = openSquares(newArr);
         if (!moves || depth === 0) return 0;
-        if (moves.length >= 8) {
+        if (moves.length === 9) {
             winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2]);
             return;
         }
