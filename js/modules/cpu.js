@@ -42,6 +42,9 @@ const cpu = (() => {
         let moves = openSquares(board);
         if (!moves || depth === 0) return 0;
         if (moves.length === 9) {
+            winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2], [1, 1]);
+            return;
+        } else if(moves.length === 8 && board[1][1] === 0) {
             winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2]);
             return;
         }
@@ -82,7 +85,7 @@ const cpu = (() => {
         if (hardmode) {
             const winningMoves = [];
             goodMove(board, true, winningMoves, 6);
-            let move = winningMoves[randomInt(winningMoves.length - 1)];
+            let move = winningMoves[randomInt(winningMoves.length)];
             return [move[0] + 1, move[1] + 1];
 
         } else {
