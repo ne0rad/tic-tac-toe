@@ -73,7 +73,6 @@ const cpu = (() => {
                 moveArr[move[0]][move[1]] = 0;
                 let evaluation = goodMove(moveArr, true, winningMoves, depth - 1);
                 if (evaluation < minEval) {
-                    winningMove = [move[0], move[1]];
                     minEval = evaluation;
                 }
             });
