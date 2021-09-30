@@ -36,14 +36,10 @@ const cpu = (() => {
     }
 
     const goodMove = (board, maximizing, winningMoves, depth) => {
-        let newArr = [];
-        for (let i = 0; i < board.length; i++)
-            newArr[i] = board[i].slice();
-        let points = winCheck(newArr);
+        let points = winCheck(board);
         if (points !== 0) return points;
 
-
-        let moves = openSquares(newArr);
+        let moves = openSquares(board);
         if (!moves || depth === 0) return 0;
         if (moves.length === 9) {
             winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2]);
@@ -54,8 +50,8 @@ const cpu = (() => {
             let maxEval = -Infinity;
             moves.forEach(move => {
                 let moveArr = [];
-                for (let i = 0; i < newArr.length; i++)
-                    moveArr[i] = newArr[i].slice();
+                for (let i = 0; i < board.length; i++)
+                    moveArr[i] = board[i].slice();
                 moveArr[move[0]][move[1]] = 1;
                 let evaluation = goodMove(moveArr, false, winningMoves, depth - 1);
                 if (evaluation > maxEval) {
@@ -69,8 +65,8 @@ const cpu = (() => {
             let minEval = +Infinity;
             moves.forEach(move => {
                 let moveArr = [];
-                for (let i = 0; i < newArr.length; i++)
-                    moveArr[i] = newArr[i].slice();
+                for (let i = 0; i < board.length; i++)
+                    moveArr[i] = board[i].slice();
                 moveArr[move[0]][move[1]] = 0;
                 let evaluation = goodMove(moveArr, true, winningMoves, depth - 1);
                 if (evaluation < minEval) {
@@ -84,11 +80,8 @@ const cpu = (() => {
 
     const generateMove = (board, hardmode) => {
         if (hardmode) {
-            let newArr = [];
-            for (let i = 0; i < board.length; i++)
-                newArr[i] = board[i].slice();
             const winningMoves = [];
-            goodMove(newArr, true, winningMoves, 6);
+            goodMove(board, true, winningMoves, 6);
             let move = winningMoves[randomInt(winningMoves.length - 1)];
             return [move[0] + 1, move[1] + 1];
 
