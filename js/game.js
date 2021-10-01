@@ -153,6 +153,8 @@ const toggleCpu = () => {
         playerTwo.setName(PLAYER_TWO_NAME);
         document.getElementById("playerTwoName").textContent = PLAYER_TWO_NAME;
         document.getElementById("playerTwoInput").value = "";
+        document.getElementById("cpuHard").className = "cpuButton";
+        hardmode = false;
     } else {
         document.getElementById("cpu").className = "cpuButton cpuEnabled";
         document.getElementById("playerTwoInput").disabled = true;
