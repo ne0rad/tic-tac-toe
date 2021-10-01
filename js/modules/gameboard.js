@@ -29,7 +29,6 @@ const gameboard = (() => {
         let squareDom = document.getElementById(`${x}${y}`);
 
         let sign;
-        let numSign;
         if (turn) sign = 0; else sign = 1;
 
         squareDom.textContent = sign === 0 ? 'x' : 'o';
