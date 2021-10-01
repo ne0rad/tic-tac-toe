@@ -165,8 +165,8 @@ const toggleCpu = () => {
 }
 
 const toggleHardmode = () => {
-    if(!cpuEnabled) return;
-    if(hardmode) {
+    if (!cpuEnabled) return;
+    if (hardmode) {
         document.getElementById("cpuHard").className = "cpuButton";
     } else {
         document.getElementById("cpuHard").className = "cpuButton cpuEnabled";

@@ -44,7 +44,7 @@ const cpu = (() => {
         if (moves.length === 9) {
             winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2], [1, 1]);
             return;
-        } else if(moves.length === 8 && board[1][1] === 0) {
+        } else if (moves.length === 8 && board[1][1] === 0) {
             winningMoves.push([0, 0], [2, 2], [2, 0], [0, 2]);
             return;
         }
